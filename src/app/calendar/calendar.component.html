@@ -1,0 +1,29 @@
+
+	<div class="month" id="mounth">
+		<ul>
+			<li class="prev" (click) = "changeMonth($event)" >&#10094;</li>
+			<li class="next" (click) = "changeMonth($event)">&#10095;</li>
+			<li style="text-align:center">
+				<span id="mounthField">{{month}}</span><br>
+				<span id="year" style="font-size:18px">{{year}}</span>
+			</li>
+		</ul>
+	</div>
+
+	<ul class="weekdays">
+		<li>Mo</li>
+		<li>Tu</li>
+		<li>We</li>
+		<li>Th</li>
+		<li>Fr</li>
+		<li>Sa</li>
+		<li>Su</li>
+	</ul>
+
+	<ul class="days" id="days" >
+		<li *ngFor='let day of days' ><div [ngClass]="day === currentDay ? 'selected' : ''">{{day}}</div> </li>
+	</ul>
+
+
+	<app-map></app-map>
+  
