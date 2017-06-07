@@ -1,7 +1,64 @@
 
-<h1>{{title}}</h1>
 
+<div class="container">
 
-<sebm-google-map [latitude]="lat" [longitude]="lng">
-  <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+  <div class="row" >
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class = "panel-heading">
+					<h3 class="panel-title">Add new Marker</h3>
+				</div>
+				<div class = "panel-body">
+          <form (submit) = "addMarker()">
+            <label>LocationName</label>
+            <input type="text" [(ngModel)] = "markerName"name = "markerName" />
+
+             <label>Latitude</label>
+            <input type="text" [(ngModel)] = "markerLat"name = "markerName" />
+
+             <label>Longitude</label>
+            <input type="text" [(ngModel)] = "markerLng"name = "markerName" />
+
+             <label>Draggable</label>
+            <select type="text" [(ngModel)] = "markerDraggable"name = "markerName">
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+            <input type="submit" value="Map it" />
+          </form>
+         
+        </div>
+			</div>
+		</div>
+	</div>
+  <div class="row">
+    <div class="col-md-12">
+      <sebm-google-map 
+  [latitude]="lat" 
+  [longitude]="lng" 
+  [zoom] = "zoom"
+  [disableDefaultUI] = "false"
+  [zoomControl] = "false"
+  (mapClick) = "mapClicked($event)"
+  
+  >
+  <sebm-google-map-marker 
+   *ngFor = "let marker of markers;let i = index"
+   [latitude]="marker.latitude"
+   [longitude]="marker.longitude" 
+    (markerClick) = "clickedMarker(marker,i)"
+    [markerDraggable] = "marker.draggable"
+    (dragEnd) = "markerDragEnd(marker,$event)"
+   >
+  <sebm-google-map-info-window>
+    <strong>{{marker.name}}</strong>
+  </sebm-google-map-info-window>
+   </sebm-google-map-marker>
 </sebm-google-map>
+
+
+    </div>
+  </div>
+
+</div>
+

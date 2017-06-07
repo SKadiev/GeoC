@@ -23,7 +23,8 @@
 	<ul class="days" id="days" >
 		<li *ngFor='let day of days' ><div [ngClass]="day === currentDay ? 'selected' : ''">{{day}}</div> </li>
 	</ul>
+	
+	
 
-
-	<app-map></app-map>
+	<geo-map></geo-map>
   

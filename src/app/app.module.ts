@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from "app/calendar/calendar.component";
-import { MapComponent } from "app/map/map.component";
+import { MapComponent } from "./map/map.component";
 import { AgmCoreModule } from 'angular2-google-maps/core';
 
 @NgModule({
