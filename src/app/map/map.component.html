@@ -9,7 +9,7 @@
 					<h3 class="panel-title">Add new Marker</h3>
 				</div>
 				<div class = "panel-body">
-          <form (submit) = "addMarker()">
+          <form (submit) = "addMarker()" name = "addMarker">
             <label>LocationName</label>
             <input type="text" [(ngModel)] = "markerName"name = "markerName" />
 
@@ -31,6 +31,27 @@
 			</div>
 		</div>
 	</div>
+
+ <div class="row" >
+		<div class="col-md-6 col-md-offset-3">
+			<div class="panel panel-default">
+				<div class = "panel-heading">
+					<h3 class="panel-title">Add new Marker from geolocation</h3>
+				</div>
+				<div class = "panel-body">
+          <form  name = "addMarkerfromGeo">
+            <label>Name of location</label>
+            <input type="text" name = "nameFromGeo" [(ngModel)] ='markerNameGeo' />
+            <label>MapIt from Geo</label>
+
+            <input type="button" (click) = "addMarkerFromGeo()" value="Map it"  />
+          </form>
+         
+        </div>
+			</div>
+		</div>
+	</div>
+
   <div class="row">
     <div class="col-md-12">
       <sebm-google-map 
@@ -39,7 +60,7 @@
   [zoom] = "zoom"
   [disableDefaultUI] = "false"
   [zoomControl] = "false"
-  (mapClick) = "mapClicked($event)"
+  
   
   >
   <sebm-google-map-marker 
@@ -52,6 +73,8 @@
    >
   <sebm-google-map-info-window>
     <strong>{{marker.name}}</strong>
+    <br />
+    <a class="delete" (click) = "removeMarker(marker)">Delete</a>
   </sebm-google-map-info-window>
    </sebm-google-map-marker>
 </sebm-google-map>

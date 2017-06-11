@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { IMarker } from './marker'
 import { MarkerService } from "app/services/marker.service";
 
@@ -11,25 +11,35 @@ import { MarkerService } from "app/services/marker.service";
   providers : [MarkerService]
 })
 export class MapComponent implements OnInit{
-  zoom:number = 7;
+  zoom:number = 1;
   title: string = 'Map';
   lat: number = 51.678418;
   lng: number = 7.809007;
   markerName:string;
+  markerNameGeo:string;  
   markerLat:string;
-  markerLng:string;
+  markerLng:string;`   `
   markerDraggable:string;
+  @Input() currentKey:string;
+  
+  ngOnChanges(){
+    debugger;
+    console.log(this.currentKey);
+      this.setMarkers(this.currentKey);
+  }
 
   constructor(private _markerService:MarkerService ){
 
   }
 
   ngOnInit(){
-    this.markers =  this._markerService.getMarkers();
+    this.markers =  this._markerService.getMarkers(this.currentKey);
   }
 
+ 
+
   markers:IMarker[] = [
-   
+    
   ];
 
   clickedMarker(marker:IMarker, index:number):void{
@@ -49,9 +59,16 @@ export class MapComponent implements OnInit{
 
     let newLatitude = $event.coords.lat;
     let newLongitude= $event.coords.lng;
+
+    this._markerService.updateMarker(updMarker, newLatitude, newLongitude);
    
   }
   
+  setMarkers(currentKey:string){
+    this.markers = this._markerService.getMarkers(currentKey);
+   
+  }
+
   addMarker():void{
     console.log("map it");
     let isDraggable;
@@ -70,10 +87,58 @@ export class MapComponent implements OnInit{
     };
 
     this.markers.push(newMarker);
-    this._markerService.addMarker(newMarker);
-  
+    this._markerService.addMarker(newMarker,this.currentKey);
+    document.forms['addMarker'].reset();
     
   }
 
- 
+  addMarkers(currentKey:string):void{
+    
+  }
+
+  addMarkerFromGeo(marker:IMarker):void{
+    debugger; 
+    console.log('geo detect');
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(this.getPosition.bind(this));
+
+            
+        } else {
+            console.log('Your device dont support geolocation');
+        }
+    }
+
+    getPosition(position):void{
+      debugger;
+      let newLatitude = position.coords.latitude;
+      let newLongitude = position.coords.longitude;
+
+      let newMarker:IMarker = {
+        name:this.markerNameGeo,
+        latitude:newLatitude,
+        longitude:newLongitude,
+        draggable:true
+      };
+      debugger;
+      this.markers.push(newMarker);
+      debugger;
+       this._markerService.addMarker(newMarker,this.currentKey);
+       document.forms['addMarkerfromGeo'].reset();
+
+    }
+
+  removeMarker(marker){
+  
+    console.log('remove marker');
+    for (let markerIndex = 0; markerIndex < this.markers.length;markerIndex++){
+      if (marker.latitude === this.markers[markerIndex].latitude && 
+          marker.longitude === this.markers[markerIndex].longitude){
+            this.markers.splice(markerIndex,1);
+      }
+   
+    }
+   this._markerService.removeMarker(marker);
+  }
+  
+
 }

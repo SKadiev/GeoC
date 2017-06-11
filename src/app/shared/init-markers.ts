@@ -1,5 +1,6 @@
 export class Init{
     load():void{
+        debugger;
         if (localStorage.getItem('markers') === null || localStorage.getItem('markers') === undefined) {
             console.log('No markers found ...creating');
             let markers = [
