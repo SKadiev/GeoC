@@ -16,9 +16,11 @@ export class CalendarComponent implements OnInit {
     days: any[];
     currentDay:number;
     currentDate:Date;
+    isSelectedDate:boolean = false;
     months:string[] = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
+    
 
     currentKey:string;
 
@@ -156,6 +158,7 @@ export class CalendarComponent implements OnInit {
     }
 
     dayClicked($event):void{
+        debugger;
         let activeDay = document.getElementsByClassName('selected');
         activeDay[0].className = '';
         $event.target.className = 'selected';
@@ -163,10 +166,16 @@ export class CalendarComponent implements OnInit {
         this.currentDate.setDate(this.currentDay);
         this.currentKey = this.currentKey = this.getCurrentKey();
         this.currentKey.trim();
+        this.isSelectedDate = true;
         console.log(this.currentDay);
         console.log(this.currentKey);
         // this.days = JSON.parse(localStorage.getItem(this.currentKey));
         console.log(this.days);
     }
-
+   
+    changeView(isClosed:boolean):void{
+        
+        this.isSelectedDate = isClosed;
+          this.initDate();   
+    }
 }

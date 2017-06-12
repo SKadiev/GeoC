@@ -4,3 +4,11 @@ h1{
 .sebm-google-map-container {
   height: 300px;
 }
+#wrapper {
+  margin-top: 10%;
+  position: relative;
+}
+#wrapper a{
+ float: right;
+ margin-top: 10px;
+}

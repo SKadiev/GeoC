@@ -1,7 +1,8 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { IMarker } from './marker'
 import { MarkerService } from "app/services/marker.service";
+import { EventEmitter } from "@angular/core";
 
 
 @Component({
@@ -18,9 +19,12 @@ export class MapComponent implements OnInit{
   markerName:string;
   markerNameGeo:string;  
   markerLat:string;
-  markerLng:string;`   `
+  markerLng:string;
   markerDraggable:string;
   @Input() currentKey:string;
+
+  @Output()mapClosed : EventEmitter<boolean> = 
+                  new EventEmitter<boolean>();
   
   ngOnChanges(){
     debugger;
@@ -140,5 +144,9 @@ export class MapComponent implements OnInit{
    this._markerService.removeMarker(marker);
   }
   
+  closeMap($event):void{
+    $event.preventDefault();
+    this.mapClosed.emit(false);
+  }
 
 }
